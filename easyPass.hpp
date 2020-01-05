@@ -162,9 +162,9 @@ template <class Type> bool assertions::assertOneDimensionalArrays (oneDimensiona
   limits<Type> startPoints (ODAObjectOne.startPoint, ODAObjectTwo.startPoint);
   limits<Type> endPoints (ODAObjectOne.endPoint, ODAObjectTwo.endPoint);
 
-  if (!isEqual(lengths)) throw systemException ("Can't work with unequal lengths");
-  if (!isEqual(startPoints)) throw systemException ("Can't work with unequal start points");
-  if (!isEqual(endPoints)) throw systemException ("Can't work with unequal end points");
+  if (!isEqual(lengths)) throw systemException (__error__.assertOneDimensionalArraysUnequalLengths);
+  if (!isEqual(startPoints)) throw systemException (__error__.assertOneDimensionalArraysUnequalStartPoints);
+  if (!isEqual(endPoints)) throw systemException (__error__.assertOneDimensionalArraysUnequalEndPoints);
 
   for (size_t iterator = ODAObjectOne.startPoint; iterator < ODAObjectOne.length + ODAObjectOne.endPoint; iterator++)
     if (ODAObjectOne[iterator] != ODAObjectTwo[iterator]) return false;
@@ -181,12 +181,12 @@ template <class Type> bool assertions::assertMatrix (matrixType<Type> MTObjectOn
   limits<Type> startColumnPoints (MTObjectOne.startLinePoint, MTObjectTwo.startColumnPoint);
   limits<Type> endColumnPoints (MTObjectOne.endLinePoint, MTObjectTwo.endLinePoint);
 
-  if (!isEqual(lines)) throw systemException ("Can't work with unequal lines");
-  if (!isEqual(columns)) throw systemException ("Can't work with unequal columns");
-  if (!isEqual(startLinePoints)) throw systemException ("Can't work with unequal start line points");
-  if (!isEqual(endLinePoints)) throw systemException ("Can't work with unequal end line points");
-  if (!isEqual(startColumnPoints)) throw systemException ("Can't work with unequal start column points");
-  if (!isEqual(endColumnPoints)) throw systemException ("Can't work with unequal end column points");
+  if (!isEqual(lines)) throw systemException (__error__.assertMatrixUnequalLines);
+  if (!isEqual(columns)) throw systemException (__error__.assertMatrixUnequalColumns);
+  if (!isEqual(startLinePoints)) throw systemException (__error__.assertMatrixUnequalStartLinePoints);
+  if (!isEqual(endLinePoints)) throw systemException (__error__.assertMatrixUnequalEndLinePoints);
+  if (!isEqual(startColumnPoints)) throw systemException (__error__.assertMatrixUnequalStartColumnPoints);
+  if (!isEqual(endColumnPoints)) throw systemException (__error__.assertMatrixUnequalEndColumnPoints);
 
   for (size_t iterator = MTObjectOne.startLinePoint; iterator < MTObjectOne.line + MTObjectOne.endLinePoint; iterator++)
     for (size_t jiterator = MTObjectOne.startColumnPoint; jiterator < MTObjectOne.column + MTObjectOne.endColumnPoint; jiterator++)

@@ -53,7 +53,7 @@ namespace easyPassDefinitions {
 
   private:
     errorHandler __error__;
-    
+
   public:
     randomGenerator () {}
 
@@ -85,7 +85,9 @@ namespace easyPassDefinitions {
   };
 
   class assertions {
-
+  private:
+    errorHandler __error__;
+    
   public:
     assertions () {}
 
