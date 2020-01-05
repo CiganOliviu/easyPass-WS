@@ -48,17 +48,17 @@ template <class Type> Type randomGenerator::staticNumberGenerator (limits<Type> 
 
   std::random_device randomDevice;
 
-std::mt19937 gen(randomDevice());
+  std::mt19937 gen(randomDevice());
 
-std::uniform_int_distribution<int> distribution(limitsObject.minimLimit, limitsObject.maximLimit);
+  std::uniform_int_distribution<int> distribution(limitsObject.minimLimit, limitsObject.maximLimit);
 
-return distribution(gen);
+  return distribution(gen);
 }
 
 template <class Type> void randomGenerator::oneDimensionalArrayGenerator (oneDimensionalArrayType<Type> ODAObject, limits<Type> limitsObject) {
 
-  if (isZero(ODAObject.length)) throw systemException ("Can't handle length as zero");
-  else if (isNegative(ODAObject.length)) throw systemException ("Can't handle length as negative");
+  if (isZero(ODAObject.length)) throw systemException (__error__.oneDimensionalArrayGeneratorZeroError);
+  else if (isNegative(ODAObject.length)) throw systemException (__error__.oneDimensionalArrayGeneratorNegativeError);
 
   srand (time(NULL));
 
@@ -68,8 +68,8 @@ template <class Type> void randomGenerator::oneDimensionalArrayGenerator (oneDim
 
 template <class Type> void randomGenerator::matrixGenerator (matrixType<Type> MTObject, limits<Type> limitsObject) {
 
-  if (isZero(MTObject.line) && isZero(MTObject.column)) throw systemException ("Can't handle line or column as zero");
-  else if (isNegative(MTObject.line) && isNegative(MTObject.column)) throw systemException ("Can't handle line or column as negative");
+  if (isZero(MTObject.line) && isZero(MTObject.column)) throw systemException (__error__.matrixGeneratorZeroError);
+  else if (isNegative(MTObject.line) && isNegative(MTObject.column)) throw systemException (__error__.matrixGeneratorNegativeError);
 
   srand (time(NULL));
 
@@ -82,8 +82,8 @@ template <class Type> void checkAndSupport::readOneDimensionalArray (oneDimensio
 
   std::cin >> ODAObject.length;
 
-  if (isZero(ODAObject.length)) throw systemException ("Can't handle length as zero");
-  else if (isNegative(ODAObject.length)) throw systemException ("Can't handle length as negative");
+  if (isZero(ODAObject.length)) throw systemException (__error__.readOneDimensionalArrayZeroError);
+  else if (isNegative(ODAObject.length)) throw systemException (__error__.readOneDimensionalArrayNegativeError);
 
   for (size_t iterator = ODAObject.startPoint; iterator < ODAObject.length + ODAObject.endPoint; iterator++)
     std::cin >> ODAObject.oneDimensionalArray[iterator];
@@ -91,8 +91,8 @@ template <class Type> void checkAndSupport::readOneDimensionalArray (oneDimensio
 
 template <class Type> void checkAndSupport::putsOneDimensionalArray (oneDimensionalArrayType<Type> ODAObject) {
 
-  if (isZero(ODAObject.length)) throw systemException ("Can't handle length as zero");
-  else if (isNegative(ODAObject.length)) throw systemException ("Can't handle length as negative");
+  if (isZero(ODAObject.length)) throw systemException (__error__.putsOneDimensionalArrayZeroError);
+  else if (isNegative(ODAObject.length)) throw systemException (__error__.putsOneDimensionalArrayNegativeError);
 
   for (size_t iterator = ODAObject.startPoint; iterator < ODAObject.length + ODAObject.endPoint; iterator++)
     std::cout << ODAObject.oneDimensionalArray[iterator] << " ";
@@ -100,8 +100,8 @@ template <class Type> void checkAndSupport::putsOneDimensionalArray (oneDimensio
 
 template <class Type> void checkAndSupport::readMatrix (matrixType<Type> MTObject) {
 
-  if (isZero(MTObject.line) && isZero(MTObject.column)) throw systemException ("Can't handle line or column as zero");
-  else if (isNegative(MTObject.line) && isNegative(MTObject.column)) throw systemException ("Can't handle line or column as negative");
+  if (isZero(MTObject.line) && isZero(MTObject.column)) throw systemException (__error__.readMatrixZeroError);
+  else if (isNegative(MTObject.line) && isNegative(MTObject.column)) throw systemException (__error__.readMatrixNegativeError);
 
   for (size_t iterator = MTObject.startLinePoint; iterator < MTObject.line + MTObject.endLinePoint; iterator++)
       for (size_t jiterator = MTObject.startColumnPoint; jiterator < MTObject.column + MTObject.endColumnPoint; jiterator++)
@@ -110,8 +110,8 @@ template <class Type> void checkAndSupport::readMatrix (matrixType<Type> MTObjec
 
 template <class Type> void checkAndSupport::putsMatrix (matrixType<Type> MTObject) {
 
-  if (isZero(MTObject.line) && isZero(MTObject.column)) throw systemException ("Can't handle line or column as zero");
-  else if (isNegative(MTObject.line) && isNegative(MTObject.column)) throw systemException ("Can't handle line or column as negative");
+  if (isZero(MTObject.line) && isZero(MTObject.column)) throw systemException (__error__.putsMatrixZeroError);
+  else if (isNegative(MTObject.line) && isNegative(MTObject.column)) throw systemException (__error__.putsMatrixNegativeError);
 
   for (size_t iterator = MTObject.startLinePoint; iterator < MTObject.line + MTObject.endLinePoint; iterator++) {
       for (size_t jiterator = MTObject.startColumnPoint; jiterator < MTObject.column + MTObject.endColumnPoint; jiterator++)

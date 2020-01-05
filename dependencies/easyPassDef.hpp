@@ -1,4 +1,5 @@
 #include "dataStructures.hpp"
+#include "errorHandler.hpp"
 
 #include <iostream>
 #include <random>
@@ -50,6 +51,9 @@ namespace easyPassDefinitions {
 
   class randomGenerator {
 
+  private:
+    errorHandler __error__;
+    
   public:
     randomGenerator () {}
 
@@ -63,6 +67,7 @@ namespace easyPassDefinitions {
 
   class checkAndSupport {
   private:
+    errorHandler __error__;
 
   public:
     checkAndSupport () {}
