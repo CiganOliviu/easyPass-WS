@@ -48,7 +48,7 @@ namespace easyPassDefinitions {
     virtual ~validationRules () {}
   };
 
-  class randomGenerator : public validationRules {
+  class randomGenerator {
 
   public:
     randomGenerator () {}
