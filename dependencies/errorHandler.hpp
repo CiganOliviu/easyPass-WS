@@ -1,3 +1,11 @@
+#include <iostream>
+#include <random>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <thread>
+#include <windows.h>
+
 class errorHandler {
 private:
 
@@ -32,6 +40,6 @@ public:
   std::string assertMatrixUnequalEndLinePoints = "Unable to process with unequal end line points in template <class Type> bool assertMatrix (matrixType<Type> MTObjectOne, matrixType<Type> MTObjectTwo);";
   std::string assertMatrixUnequalStartColumnPoints = "Unable to process with unequal start column points in template <class Type> bool assertMatrix (matrixType<Type> MTObjectOne, matrixType<Type> MTObjectTwo);";
   std::string assertMatrixUnequalEndColumnPoints = "Unable to process with unequal end column points in template <class Type> bool assertMatrix (matrixType<Type> MTObjectOne, matrixType<Type> MTObjectTwo);";
-  
+
   virtual ~errorHandler () {}
 };

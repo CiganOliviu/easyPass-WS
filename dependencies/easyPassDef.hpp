@@ -1,14 +1,6 @@
 #include "dataStructures.hpp"
 #include "errorHandler.hpp"
 
-#include <iostream>
-#include <random>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <thread>
-#include <windows.h>
-
 #ifndef ZERO
 #define ZERO 0
 #endif
@@ -87,7 +79,7 @@ namespace easyPassDefinitions {
   class assertions {
   private:
     errorHandler __error__;
-    
+
   public:
     assertions () {}
 
