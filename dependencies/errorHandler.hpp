@@ -7,7 +7,7 @@ public:
   std::string oneDimensionalArrayGeneratorZeroError = "Unable to handle length as zero in template <class Type> void oneDimensionalArrayGenerator (oneDimensionalArrayType<Type> ODAObject, limits<Type> limitsObject);";
   std::string oneDimensionalArrayGeneratorNegativeError = "Unable to handle negative length in template <class Type> void oneDimensionalArrayGenerator (oneDimensionalArrayType<Type> ODAObject, limits<Type> limitsObject);";
 
-  std::string matrixGeneratorZeroError = "Unable to handle line or column as zero in template <class Type> void matrixGenerator (matrixType<Type> MTObject, limits<Type> limitsObject);"
+  std::string matrixGeneratorZeroError = "Unable to handle line or column as zero in template <class Type> void matrixGenerator (matrixType<Type> MTObject, limits<Type> limitsObject);";
   std::string matrixGeneratorNegativeError = "Unable to handle negative line or column in template <class Type> void matrixGenerator (matrixType<Type> MTObject, limits<Type> limitsObject);";
 
   std::string readOneDimensionalArrayZeroError = "Unable to handle length as zero in template <class Type> void readOneDimensionalArray (oneDimensionalArrayType<Type> ODAObject);";
