@@ -181,7 +181,7 @@ template <class Type> void portData::portOneDimensionalArrays (oneDimensionalArr
     ODAObjectOne.oneDimensionalArray[iterator] = ODAObjectTwo.oneDimensionalArray[iterator];
 }
 
-template <class Type> void portData::portMatrices (matrixType<Type> matrixObjectOne, matrixType<Type> matrixObjectTwo) {
+template <class Type> void portData::portMatrices (matrixType<Type> & matrixObjectOne, matrixType<Type> matrixObjectTwo) {
 
   if (isZero(matrixObjectTwo.line) && isZero(matrixObjectTwo.column)) throw systemException (__error__.putsMatrixZeroError);
   else if (isNegative(matrixObjectTwo.line) && isNegative(matrixObjectTwo.column)) throw systemException (__error__.putsMatrixNegativeError);
@@ -191,7 +191,7 @@ template <class Type> void portData::portMatrices (matrixType<Type> matrixObject
   matrixObjectOne.startPoint = matrixObjectTwo.startPoint;
   matrixObjectOne.endPoint = matrixObjectOne.endPoint;
 
-  for (size_t iterator = matrixObjectOne.startLinePoint; iterator < matrixObjectOne.line + MTObject.endLinePoint; iterator++)
+  for (size_t iterator = matrixObjectOne.startLinePoint; iterator < matrixObjectOne.line + matrixObjectOne.endLinePoint; iterator++)
       for (size_t jiterator = matrixObjectOne.startColumnPoint; jiterator < matrixObjectOne.column + matrixObjectOne.endColumnPoint; jiterator++)
         matrixObjectOne.matrix[iterator][jiterator] = matrixObjectTwo.matrix[iterator][jiterator];
 }
