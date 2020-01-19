@@ -103,6 +103,17 @@ namespace easyPassDefinitions {
     virtual ~checkAndSupport () {}
   };
 
+  class portData {
+
+  public:
+    portData () {};
+
+    template <class Type> void portOneDimensionalArrays (oneDimensionalArrayType<Type> ODAObjectOne, oneDimensionalArrayType<Type> ODAObjectTwo);
+    template <class Type> void portMatrices (matrixType<Type> matrixObjectOne, matrixType<Type> matrixObjectTwo);
+
+    virtual ~portData () {}
+  };
+
   class assertions {
   private:
     errorHandler __error__;
@@ -120,4 +131,3 @@ namespace easyPassDefinitions {
 
     virtual ~assertions () {}
   };
-}

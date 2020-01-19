@@ -168,6 +168,34 @@ template <class Type> void checkAndSupport::putsTree (binaryTreeType<Type> * roo
   }
 }
 
+template <class Type> void portData::portOneDimensionalArrays (oneDimensionalArrayType<Type> ODAObjectOne, oneDimensionalArrayType<Type> ODAObjectTwo) {
+
+  if (isZero(ODAObjectTwo.length)) throw systemException (__error__.portOneDimensionalArraysZeroError);
+  else if (isNegative(ODAObjectTwo.length)) throw systemException (__error__.portOneDimensionalArraysNegativeError);
+
+  ODAObjectOne.length = ODAObjectTwo.length;
+  ODAObjectOne.startPoint = ODAObjectTwo.startPoint;
+  ODAObjectOne.endPoint = ODAObjectTwo.endPoint;
+
+  for (size_t iterator = ODAObjectOne.startPoint; iterator < ODAObjectOne.length + ODAObjectOne.endPoint; iterator++)
+    ODAObjectOne.oneDimensionalArray[iterator] = ODAObjectTwo.oneDimensionalArray[iterator];
+}
+
+template <class Type> void portData::portMatrices (matrixType<Type> matrixObjectOne, matrixType<Type> matrixObjectTwo) {
+
+  if (isZero(matrixObjectTwo.line) && isZero(matrixObjectTwo.column)) throw systemException (__error__.putsMatrixZeroError);
+  else if (isNegative(matrixObjectTwo.line) && isNegative(matrixObjectTwo.column)) throw systemException (__error__.putsMatrixNegativeError);
+
+  matrixObjectOne.line = matrixObjectTwo.line;
+  matrixObjectOne.column = matrixObjectTwo.column;
+  matrixObjectOne.startPoint = matrixObjectTwo.startPoint;
+  matrixObjectOne.endPoint = matrixObjectOne.endPoint;
+
+  for (size_t iterator = matrixObjectOne.startLinePoint; iterator < matrixObjectOne.line + MTObject.endLinePoint; iterator++)
+      for (size_t jiterator = matrixObjectOne.startColumnPoint; jiterator < matrixObjectOne.column + matrixObjectOne.endColumnPoint; jiterator++)
+        matrixObjectOne.matrix[iterator][jiterator] = matrixObjectTwo.matrix[iterator][jiterator];
+}
+
 template <class Type> bool assertions::assertPrimitiveDataTypes (limits<Type> limitsObject) {
 
   if (limitsObject.minimLimit == limitsObject.maximLimit) return true;
