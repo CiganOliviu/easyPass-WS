@@ -301,8 +301,10 @@ template <class Type> void portData::portMatrices (matrixType<Type> & matrixObje
 
   matrixObjectOne.line = matrixObjectTwo.line;
   matrixObjectOne.column = matrixObjectTwo.column;
-  matrixObjectOne.startPoint = matrixObjectTwo.startPoint;
-  matrixObjectOne.endPoint = matrixObjectOne.endPoint;
+  matrixObjectOne.startLinePoint = matrixObjectTwo.startLinePoint;
+  matrixObjectOne.endLinePoint = matrixObjectOne.endLinePoint;
+  matrixObjectOne.startColumnPoint = matrixObjectTwo.startColumnPoint;
+  matrixObjectOne.endColumnPoint = matrixObjectOne.endColumnPoint;
 
   for (size_t iterator = matrixObjectOne.startLinePoint; iterator < matrixObjectOne.line + matrixObjectOne.endLinePoint; iterator++)
       for (size_t jiterator = matrixObjectOne.startColumnPoint; jiterator < matrixObjectOne.column + matrixObjectOne.endColumnPoint; jiterator++)
