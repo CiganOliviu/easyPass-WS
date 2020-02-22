@@ -167,8 +167,11 @@ template <class Type> void errorsHandler::equalityHandlerMatrices (matrixType<Ty
 
 void errorsHandler::filesErrorValidation (std::ifstream & file, const char coreFunction[200]) {
 
+  __errorMessages__.filesError += coreFunction;
+
   if (!file.is_open())
-    __errorMessages__.filesError += coreFunction;
+    throw systemException(__errorMessages__.filesError);
+
 }
 
 template <class Type> Type randomGenerator::numberGenerator (limits<Type> limitsObject) {
