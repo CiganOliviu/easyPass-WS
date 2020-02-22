@@ -107,11 +107,11 @@ template <class Type> void errorsHandler::standardHandlerMatrix (matrixType<Type
   __errorMessages__.matrixZeroColumnError += coreFunction;
   __errorMessages__.matrixNegativeColumnError += coreFunction;
 
-  if (__validations__.isZero(MTObject.lineRefference)) throw systemException (__errorMessages__.matrixZeroLineError);
-  if (__validations__.isNegative(MTObject.lineRefference)) throw systemException (__errorMessages__.matrixNegativeLineError);
+  if (__validations__.isZero<Type>(MTObject.lineRefference)) throw systemException (__errorMessages__.matrixZeroLineError);
+  if (__validations__.isNegative<Type>(MTObject.lineRefference)) throw systemException (__errorMessages__.matrixNegativeLineError);
 
-  if (__validations__.isZero(MTObject.columnRefference)) throw systemException (__errorMessages__.matrixZeroColumnError);
-  if (__validations__.isNegative(MTObject.columnRefference)) throw systemException (__errorMessages__.matrixNegativeColumnError);
+  if (__validations__.isZero<Type>(MTObject.columnRefference)) throw systemException (__errorMessages__.matrixZeroColumnError);
+  if (__validations__.isNegative<Type>(MTObject.columnRefference)) throw systemException (__errorMessages__.matrixNegativeColumnError);
 }
 
 template <class Type> void errorsHandler::equalityHandlerOneDimensionalArrays (oneDimensionalArrayType<Type> ODAObjectOne, oneDimensionalArrayType<Type> ODAObjectTwo, const char coreFunction[]) {
@@ -122,15 +122,15 @@ template <class Type> void errorsHandler::equalityHandlerOneDimensionalArrays (o
   __errorMessages__.unequalStartPointsError += coreFunction;
   __errorMessages__.unequalEndPointsError += coreFunction;
 
-  if (__validations__.isZero(ODAObjectOne.length)) throw systemException (__errorMessages__.oneDimensionalArrayZeroLengthError);
-  if (__validations__.isNegative(ODAObjectOne.length)) throw systemException (__errorMessages__.oneDimensionalArrayNegativeLengthError);
+  if (__validations__.isZero<Type>(ODAObjectOne.length)) throw systemException (__errorMessages__.oneDimensionalArrayZeroLengthError);
+  if (__validations__.isNegative<Type>(ODAObjectOne.length)) throw systemException (__errorMessages__.oneDimensionalArrayNegativeLengthError);
 
-  if (__validations__.isZero(ODAObjectTwo.length)) throw systemException (__errorMessages__.oneDimensionalArrayZeroLengthError);
-  if (__validations__.isNegative(ODAObjectTwo.length)) throw systemException (__errorMessages__.oneDimensionalArrayNegativeLengthError);
+  if (__validations__.isZero<Type>(ODAObjectTwo.length)) throw systemException (__errorMessages__.oneDimensionalArrayZeroLengthError);
+  if (__validations__.isNegative<Type>(ODAObjectTwo.length)) throw systemException (__errorMessages__.oneDimensionalArrayNegativeLengthError);
 
-  if (__validations__.isNotEqualParameterBased(ODAObjectOne.length, ODAObjectTwo.length)) throw systemException (__errorMessages__.unequalLengthError);
-  if (__validations__.isNotEqualParameterBased(ODAObjectOne.length, ODAObjectTwo.length)) throw systemException (__errorMessages__.unequalStartPointsError);
-  if (__validations__.isNotEqualParameterBased(ODAObjectOne.length, ODAObjectTwo.length)) throw systemException (__errorMessages__.unequalEndPointsError);
+  if (__validations__.isNotEqualParameterBased<Type>(ODAObjectOne.length, ODAObjectTwo.length)) throw systemException (__errorMessages__.unequalLengthError);
+  if (__validations__.isNotEqualParameterBased<Type>(ODAObjectOne.length, ODAObjectTwo.length)) throw systemException (__errorMessages__.unequalStartPointsError);
+  if (__validations__.isNotEqualParameterBased<Type>(ODAObjectOne.length, ODAObjectTwo.length)) throw systemException (__errorMessages__.unequalEndPointsError);
 }
 
 template <class Type> void errorsHandler::equalityHandlerMatrices (matrixType<Type> MTObjectOne, matrixType<Type> MTObjectTwo, const char coreFunction[]) {
@@ -147,31 +147,44 @@ template <class Type> void errorsHandler::equalityHandlerMatrices (matrixType<Ty
   __errorMessages__.unequalStartColumnPointsError += coreFunction;
   __errorMessages__.unequalEndColumnPointsError += coreFunction;
 
-  if (__validations__.isZero(MTObjectOne.lineRefference)) throw systemException (__errorMessages__.matrixZeroLineError);
-  if (__validations__.isNegative(MTObjectOne.lineRefference)) throw systemException (__errorMessages__.matrixNegativeLineError);
-  if (__validations__.isZero(MTObjectOne.columnRefference)) throw systemException (__errorMessages__.matrixZeroColumnError);
-  if (__validations__.isNegative(MTObjectOne.columnRefference)) throw systemException (__errorMessages__.matrixNegativeColumnError);
+  if (__validations__.isZero<Type>(MTObjectOne.lineRefference)) throw systemException (__errorMessages__.matrixZeroLineError);
+  if (__validations__.isNegative<Type>(MTObjectOne.lineRefference)) throw systemException (__errorMessages__.matrixNegativeLineError);
+  if (__validations__.isZero<Type>(MTObjectOne.columnRefference)) throw systemException (__errorMessages__.matrixZeroColumnError);
+  if (__validations__.isNegative<Type>(MTObjectOne.columnRefference)) throw systemException (__errorMessages__.matrixNegativeColumnError);
 
-  if (__validations__.isZero(MTObjectTwo.lineRefference)) throw systemException (__errorMessages__.matrixZeroLineError);
-  if (__validations__.isNegative(MTObjectTwo.lineRefference)) throw systemException (__errorMessages__.matrixNegativeLineError);
-  if (__validations__.isZero(MTObjectTwo.columnRefference)) throw systemException (__errorMessages__.matrixZeroColumnError);
-  if (__validations__.isNegative(MTObjectTwo.columnRefference)) throw systemException (__errorMessages__.matrixNegativeColumnError);
+  if (__validations__.isZero<Type>(MTObjectTwo.lineRefference)) throw systemException (__errorMessages__.matrixZeroLineError);
+  if (__validations__.isNegative<Type>(MTObjectTwo.lineRefference)) throw systemException (__errorMessages__.matrixNegativeLineError);
+  if (__validations__.isZero<Type>(MTObjectTwo.columnRefference)) throw systemException (__errorMessages__.matrixZeroColumnError);
+  if (__validations__.isNegative<Type>(MTObjectTwo.columnRefference)) throw systemException (__errorMessages__.matrixNegativeColumnError);
 
-  if (__validations__.isNotEqualParameterBased(MTObjectOne.lineRefference, MTObjectTwo.lineRefference)) throw systemException (__errorMessages__.unequalLinesError);
-  if (__validations__.isNotEqualParameterBased(MTObjectOne.columnRefference, MTObjectTwo.columnRefference)) throw systemException (__errorMessages__.unequalColumnsError);
-  if (__validations__.isNotEqualParameterBased(MTObjectOne.startLinePoint, MTObjectTwo.startLinePoint)) throw systemException (__errorMessages__.unequalStartLinePointsError);
-  if (__validations__.isNotEqualParameterBased(MTObjectOne.endLinePoint, MTObjectTwo.endLinePoint)) throw systemException (__errorMessages__.unequalEndLinePointsError);
-  if (__validations__.isNotEqualParameterBased(MTObjectOne.startColumnPoint, MTObjectTwo.startColumnPoint)) throw systemException (__errorMessages__.unequalStartColumnPointsError);
-  if (__validations__.isNotEqualParameterBased(MTObjectOne.endColumnPoint, MTObjectTwo.endColumnPoint)) throw systemException (__errorMessages__.unequalEndColumnPointsError);
+  if (__validations__.isNotEqualParameterBased<Type>(MTObjectOne.lineRefference, MTObjectTwo.lineRefference)) throw systemException (__errorMessages__.unequalLinesError);
+  if (__validations__.isNotEqualParameterBased<Type>(MTObjectOne.columnRefference, MTObjectTwo.columnRefference)) throw systemException (__errorMessages__.unequalColumnsError);
+  if (__validations__.isNotEqualParameterBased<Type>(MTObjectOne.startLinePoint, MTObjectTwo.startLinePoint)) throw systemException (__errorMessages__.unequalStartLinePointsError);
+  if (__validations__.isNotEqualParameterBased<Type>(MTObjectOne.endLinePoint, MTObjectTwo.endLinePoint)) throw systemException (__errorMessages__.unequalEndLinePointsError);
+  if (__validations__.isNotEqualParameterBased<Type>(MTObjectOne.startColumnPoint, MTObjectTwo.startColumnPoint)) throw systemException (__errorMessages__.unequalStartColumnPointsError);
+  if (__validations__.isNotEqualParameterBased<Type>(MTObjectOne.endColumnPoint, MTObjectTwo.endColumnPoint)) throw systemException (__errorMessages__.unequalEndColumnPointsError);
 }
 
-void errorsHandler::standardFileHandler (std::ifstream & file, const char coreFunction[200]) {
+void errorsHandler::standardFileHandler (std::ifstream & file, const char coreFunction[]) {
 
   __errorMessages__.filesError += coreFunction;
 
   if (!file.is_open())
     throw systemException(__errorMessages__.filesError);
+}
 
+template <class Type> void errorsHandler::zeroNumberHandler (Type parameter, const char coreFunction[]) {
+
+  __errorMessages__.zeroNumberError += coreFunction;
+
+  if (__validations__.isZero<Type>(parameter)) throw systemException(__errorMessages__.zeroNumberError);
+}
+
+template <class Type> void errorsHandler::negativeNumberHandler (Type parameter, const char coreFunction[]) {
+
+  __errorMessages__.negativeNumberError += coreFunction;
+
+  if (__validations__.isNegative<Type>(parameter)) throw systemException(__errorMessages__.negativeNumberError);
 }
 
 template <class Type> Type randomGenerator::numberGenerator (limits<Type> limitsObject) {
