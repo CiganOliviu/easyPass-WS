@@ -165,7 +165,7 @@ template <class Type> void errorsHandler::equalityHandlerMatrices (matrixType<Ty
   if (__validations__.isNotEqualParameterBased(MTObjectOne.endColumnPoint, MTObjectTwo.endColumnPoint)) throw systemException (__errorMessages__.unequalEndColumnPointsError);
 }
 
-void errorsHandler::filesErrorValidation (std::ifstream & file, const char coreFunction[200]) {
+void errorsHandler::standardFileHandler (std::ifstream & file, const char coreFunction[200]) {
 
   __errorMessages__.filesError += coreFunction;
 
@@ -230,7 +230,7 @@ template <class Type> void checkAndSupport::readDynamicFileDimensionalArray (cha
   std::ifstream dataStream(fileName, std::ios::in);
   Type data;
 
-  __handler__.filesErrorValidation (dataStream, __PRETTY_FUNCTION__);
+  __handler__.standardFileHandler (dataStream, __PRETTY_FUNCTION__);
 
   while (dataStream >> data) {
 
@@ -257,7 +257,7 @@ template <class Type> void checkAndSupport::putsFileOneDimensionalArray (char * 
 
   std::ofstream dataStream(fileName, std::ios::out);
 
-  __handler__.filesErrorValidation (dataStream, __PRETTY_FUNCTION__);
+  __handler__.standardFileHandler (dataStream, __PRETTY_FUNCTION__);
 
   for (size_t iterator = ODAObject.startPoint; iterator < ODAObject.length + ODAObject.endPoint; iterator++)
     dataStream << ODAObject.oneDimensionalArray[iterator] << " ";
@@ -284,7 +284,7 @@ template <class Type> void checkAndSupport::readDynamicFileMatrix (char * fileNa
   char endOfLine;
   int auxColumnLength = MTObject.columnRefference;
 
-  __handler__.filesErrorValidation (dataStream, __PRETTY_FUNCTION__);
+  __handler__.standardFileHandler (dataStream, __PRETTY_FUNCTION__);
 
   while (dataStream >> data) {
 
@@ -323,7 +323,7 @@ template <class Type> void checkAndSupport::putsFileMatrix (char * fileName, mat
 
   std::ofstream dataStream(fileName, std::ios::out);
 
-  __handler__.filesErrorValidation (dataStream, __PRETTY_FUNCTION__);
+  __handler__.standardFileHandler (dataStream, __PRETTY_FUNCTION__);
 
   for (size_t iterator = MTObject.startLinePoint; iterator < MTObject.line + MTObject.endLinePoint; iterator++) {
       for (size_t jiterator = MTObject.startColumnPoint; jiterator < MTObject.column + MTObject.endColumnPoint; jiterator++)

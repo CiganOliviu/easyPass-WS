@@ -86,7 +86,7 @@ namespace easyPassDefinitions {
     template <class Type> void equalityHandlerOneDimensionalArrays (oneDimensionalArrayType<Type> ODAObjectOne, oneDimensionalArrayType<Type> ODAObjectTwo, const char coreFunction[]);
     template <class Type> void equalityHandlerMatrices (matrixType<Type> MTObjectOne, matrixType<Type> MTObjectTwo, const char coreFunction[]);
 
-    void filesErrorValidation (std::ifstream & file, const char coreFunction[200]);
+    void standardFileHandler (std::ifstream & file, const char coreFunction[200]);
 
     virtual ~errorsHandler () {}
   };
