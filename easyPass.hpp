@@ -21,6 +21,20 @@ template <class Type> bool validationRules::isZero (Type parameter) {
   return false;
 }
 
+template <class Type> bool validationRules::isNotNegative (Type parameter) {
+
+  if (parameter < 0) return false;
+
+  return true;
+}
+
+template <class Type> bool validationRules::isNotZero (Type parameter) {
+
+  if (parameter == 0) return false;
+
+  return true;
+}
+
 template <class Type> bool validationRules::isNegativeOrZero (Type parameter) {
 
   if (parameter <= 0) return true;
@@ -28,16 +42,16 @@ template <class Type> bool validationRules::isNegativeOrZero (Type parameter) {
   return false;
 }
 
+template <class Type> bool validationRules::isNotNegativeOrZero (Type parameter) {
+
+  if (parameter <= 0) return false;
+
+  return true;
+}
+
 template <class Type> bool validationRules::isNull (Type parameter) {
 
   if (parameter == NULL) return true;
-
-  return false;
-}
-
-template <class Type> bool validationRules::isNotZero (Type parameter) {
-
-  if (parameter != 0) return true;
 
   return false;
 }
@@ -49,32 +63,106 @@ template <class Type> bool validationRules::isNotNull (Type parameter) {
   return false;
 }
 
-template <class Type> bool validationRules::isEqual (limits<Type> limitsObject) {
+template <class Type> bool validationRules::isEqualObjectBased (limits<Type> limitsObject) {
 
     if (limitsObject.minimLimit == limitsObject.maximLimit) return true;
 
     return false;
 }
 
-template <class Type> Type validationRules::returnTheMaximumParameter (limits<Type> limitsObject) {
+template <class Type> bool validationRules::isEqualParameterBased (Type parameterOne, Type parameterTwo) {
 
-  if (limitsObject.minimLimit >= limitsObject.maximLimit) return limitsObject.minimLimit;
+    if (parameterOne == parameterTwo) return true;
 
-  return limitsObject.maximLimit;
+    return false;
 }
 
-template <class Type> Type validationRules::returnTheMinimumParameter (limits<Type> limitsObject) {
+template <class Type> bool validationRules::isNotEqualObjectBased (limits<Type> limitsObject) {
 
-  if (limitsObject.minimLimit <= limitsObject.maximLimit) return limitsObject.minimLimit;
+    if (limitsObject.minimLimit == limitsObject.maximLimit) return false;
 
-  return limitsObject.maximLimit;
+    return true;
 }
 
-template <class Type> void validationRules::interchangeValues (Type & parameterOne, Type & parameterTwo) {
+template <class Type> bool validationRules::isNotEqualParameterBased (Type parameterOne, Type parameterTwo) {
 
-  parameterOne = parameterOne + parameterTwo;
-  parameterTwo = parameterOne - parameterTwo;
-  parameterOne = parameterOne - parameterTwo;
+    if (parameterOne == parameterTwo) return false;
+
+    return true;
+}
+
+template <class Type> void errorsHandler::standardHandlerOneDimensionalArray (oneDimensionalArrayType<Type> ODAObject, const char coreFunction[]) {
+
+  __errorMessages__.oneDimensionalArrayZeroLengthError += coreFunction;
+  __errorMessages__.oneDimensionalArrayNegativeLengthError += coreFunction;
+
+  if (__validations__.isZero(ODAObject.length)) throw systemException (__errorMessages__.oneDimensionalArrayZeroLengthError);
+  if (__validations__.isNegative(ODAObject.length)) throw systemException (__errorMessages__.oneDimensionalArrayNegativeLengthError);
+}
+
+template <class Type> void errorsHandler::standardHandlerMatrix (matrixType<Type> MTObject, const char coreFunction[]) {
+
+  __errorMessages__.matrixZeroLineError += coreFunction;
+  __errorMessages__.matrixNegativeLineError += coreFunction;
+  __errorMessages__.matrixZeroColumnError += coreFunction;
+  __errorMessages__.matrixNegativeColumnError += coreFunction;
+
+  if (__validations__.isZero(MTObject.lineRefference)) throw systemException (__errorMessages__.matrixZeroLineError);
+  if (__validations__.isNegative(MTObject.lineRefference)) throw systemException (__errorMessages__.matrixNegativeLineError);
+
+  if (__validations__.isZero(MTObject.columnRefference)) throw systemException (__errorMessages__.matrixZeroColumnError);
+  if (__validations__.isNegative(MTObject.columnRefference)) throw systemException (__errorMessages__.matrixNegativeColumnError);
+}
+
+template <class Type> void errorsHandler::equalityHandlerOneDimensionalArrays (oneDimensionalArrayType<Type> ODAObjectOne, oneDimensionalArrayType<Type> ODAObjectTwo, const char coreFunction[]) {
+
+  __errorMessages__.oneDimensionalArrayZeroLengthError += coreFunction;
+  __errorMessages__.oneDimensionalArrayNegativeLengthError += coreFunction;
+  __errorMessages__.unequalLengthError += coreFunction;
+  __errorMessages__.unequalStartPointsError += coreFunction;
+  __errorMessages__.unequalEndPointsError += coreFunction;
+
+  if (__validations__.isZero(ODAObjectOne.length)) throw systemException (__errorMessages__.oneDimensionalArrayZeroLengthError);
+  if (__validations__.isNegative(ODAObjectOne.length)) throw systemException (__errorMessages__.oneDimensionalArrayNegativeLengthError);
+
+  if (__validations__.isZero(ODAObjectTwo.length)) throw systemException (__errorMessages__.oneDimensionalArrayZeroLengthError);
+  if (__validations__.isNegative(ODAObjectTwo.length)) throw systemException (__errorMessages__.oneDimensionalArrayNegativeLengthError);
+
+  if (__validations__.isNotEqualParameterBased(ODAObjectOne.length, ODAObjectTwo.length)) throw systemException (__errorMessages__.unequalLengthError);
+  if (__validations__.isNotEqualParameterBased(ODAObjectOne.length, ODAObjectTwo.length)) throw systemException (__errorMessages__.unequalStartPointsError);
+  if (__validations__.isNotEqualParameterBased(ODAObjectOne.length, ODAObjectTwo.length)) throw systemException (__errorMessages__.unequalEndPointsError);
+}
+
+template <class Type> void errorsHandler::equalityHandlerMatrices (matrixType<Type> MTObjectOne, matrixType<Type> MTObjectTwo, const char coreFunction[]) {
+
+  __errorMessages__.matrixZeroLineError += coreFunction;
+  __errorMessages__.matrixNegativeLineError += coreFunction;
+  __errorMessages__.matrixZeroColumnError += coreFunction;
+  __errorMessages__.matrixNegativeColumnError += coreFunction;
+
+  __errorMessages__.unequalLinesError += coreFunction;
+  __errorMessages__.unequalColumnsError += coreFunction;
+  __errorMessages__.unequalStartLinePointsError += coreFunction;
+  __errorMessages__.unequalEndLinePointsError += coreFunction;
+  __errorMessages__.unequalStartColumnPointsError += coreFunction;
+  __errorMessages__.unequalEndColumnPointsError += coreFunction;
+
+  if (__validations__.isZero(MTObjectOne.lineRefference)) throw systemException (__errorMessages__.matrixZeroLineError);
+  if (__validations__.isNegative(MTObjectOne.lineRefference)) throw systemException (__errorMessages__.matrixNegativeLineError);
+  if (__validations__.isZero(MTObjectOne.columnRefference)) throw systemException (__errorMessages__.matrixZeroColumnError);
+  if (__validations__.isNegative(MTObjectOne.columnRefference)) throw systemException (__errorMessages__.matrixNegativeColumnError);
+
+  if (__validations__.isZero(MTObjectTwo.lineRefference)) throw systemException (__errorMessages__.matrixZeroLineError);
+  if (__validations__.isNegative(MTObjectTwo.lineRefference)) throw systemException (__errorMessages__.matrixNegativeLineError);
+  if (__validations__.isZero(MTObjectTwo.columnRefference)) throw systemException (__errorMessages__.matrixZeroColumnError);
+  if (__validations__.isNegative(MTObjectTwo.columnRefference)) throw systemException (__errorMessages__.matrixNegativeColumnError);
+
+  if (__validations__.isNotEqualParameterBased(MTObjectOne.lineRefference, MTObjectTwo.lineRefference)) throw systemException (__errorMessages__.unequalLinesError);
+  if (__validations__.isNotEqualParameterBased(MTObjectOne.columnRefference, MTObjectTwo.columnRefference)) throw systemException (__errorMessages__.unequalColumnsError);
+  if (__validations__.isNotEqualParameterBased(MTObjectOne.startLinePoint, MTObjectTwo.startLinePoint)) throw systemException (__errorMessages__.unequalStartLinePointsError);
+  if (__validations__.isNotEqualParameterBased(MTObjectOne.endLinePoint, MTObjectTwo.endLinePoint)) throw systemException (__errorMessages__.unequalEndLinePointsError);
+  if (__validations__.isNotEqualParameterBased(MTObjectOne.startColumnPoint, MTObjectTwo.startColumnPoint)) throw systemException (__errorMessages__.unequalStartColumnPointsError);
+  if (__validations__.isNotEqualParameterBased(MTObjectOne.endColumnPoint, MTObjectTwo.endColumnPoint)) throw systemException (__errorMessages__.unequalEndColumnPointsError);
 }
 
 template <class Type> Type randomGenerator::numberGenerator (limits<Type> limitsObject) {
@@ -99,8 +187,7 @@ template <class Type> Type randomGenerator::staticNumberGenerator (limits<Type> 
 
 template <class Type> void randomGenerator::oneDimensionalArrayGenerator (oneDimensionalArrayType<Type> ODAObject, limits<Type> limitsObject) {
 
-  if (isZero(ODAObject.length)) throw systemException (__error__.oneDimensionalArrayGeneratorZeroError);
-  if (isNegative(ODAObject.length)) throw systemException (__error__.oneDimensionalArrayGeneratorNegativeError);
+  __handler__.standardHandlerOneDimensionalArray (ODAObject, __PRETTY_FUNCTION__);
 
   srand (time(NULL));
 
@@ -110,8 +197,7 @@ template <class Type> void randomGenerator::oneDimensionalArrayGenerator (oneDim
 
 template <class Type> void randomGenerator::matrixGenerator (matrixType<Type> & MTObject, limits<Type> limitsObject) {
 
-  if (isZero(MTObject.line) && isZero(MTObject.column)) throw systemException (__error__.matrixGeneratorZeroError);
-  if (isNegative(MTObject.line) && isNegative(MTObject.column)) throw systemException (__error__.matrixGeneratorNegativeError);
+  __handler__.standardHandlerMatrix (MTObject, __PRETTY_FUNCTION__);
 
   srand (time(NULL));
 
@@ -124,8 +210,7 @@ template <class Type> void checkAndSupport::readOneDimensionalArray (oneDimensio
 
   std::cin >> ODAObject.length;
 
-  if (isZero(ODAObject.length)) throw systemException (__error__.readOneDimensionalArrayZeroError);
-  if (isNegative(ODAObject.length)) throw systemException (__error__.readOneDimensionalArrayNegativeError);
+  __handler__.standardHandlerOneDimensionalArray(ODAObject, __PRETTY_FUNCTION__);
 
   for (size_t iterator = ODAObject.startPoint; iterator < ODAObject.length + ODAObject.endPoint; iterator++)
     std::cin >> ODAObject.oneDimensionalArray[iterator];
@@ -133,30 +218,25 @@ template <class Type> void checkAndSupport::readOneDimensionalArray (oneDimensio
 
 template <class Type> void checkAndSupport::readDynamicFileDimensionalArray (char * fileName, oneDimensionalArrayType<Type> ODAObject) {
 
-    std::ifstream dataStream(fileName, std::ios::in);
-    Type data;
+  std::ifstream dataStream(fileName, std::ios::in);
+  Type data;
 
-    if (dataStream.is_open()) {
+  if (dataStream.is_open()) {
 
-      while (dataStream >> data) {
+    while (dataStream >> data) {
 
-        ODAObject.oneDimensionalArray[ODAObject.length] = data;
-        ODAObject.length += 1;
-      }
-
-      if (isZero(ODAObject.length)) throw systemException (__error__.readDynamicFileOneDimensionalArrayZeroError);
-      if (isNegative(ODAObject.length)) throw systemException (__error__.readDynamicFileOneDimensionalArrayNegativeError);
-
-      dataStream.close();
+      ODAObject.oneDimensionalArray[ODAObject.length] = data;
+      ODAObject.length += 1;
     }
-    else
-      throw systemException (__error__.filesError);
+
+    __handler__.standardHandlerOneDimensionalArray (ODAObject, __PRETTY_FUNCTION__);
+    dataStream.close();
+  }
 }
 
 template <class Type> void checkAndSupport::putsOneDimensionalArray (oneDimensionalArrayType<Type> ODAObject) {
 
-  if (isZero(ODAObject.length)) throw systemException (__error__.putsOneDimensionalArrayZeroError);
-  if (isNegative(ODAObject.length)) throw systemException (__error__.putsOneDimensionalArrayNegativeError);
+  __handler__.standardHandlerOneDimensionalArray(ODAObject, __PRETTY_FUNCTION__);
 
   for (size_t iterator = ODAObject.startPoint; iterator < ODAObject.length + ODAObject.endPoint; iterator++)
     std::cout << ODAObject.oneDimensionalArray[iterator] << " ";
@@ -164,8 +244,7 @@ template <class Type> void checkAndSupport::putsOneDimensionalArray (oneDimensio
 
 template <class Type> void checkAndSupport::putsFileOneDimensionalArray (char * fileName, oneDimensionalArrayType<Type> ODAObject) {
 
-  if (isZero(ODAObject.length)) throw systemException (__error__.putsFileOneDimensionalArrayZeroError);
-  if (isNegative(ODAObject.length)) throw systemException (__error__.putsFileOneDimensionalArrayNegativeError);
+  __handler__.standardHandlerOneDimensionalArray(ODAObject, __PRETTY_FUNCTION__);
 
   std::ofstream dataStream(fileName, std::ios::out);
 
@@ -176,14 +255,13 @@ template <class Type> void checkAndSupport::putsFileOneDimensionalArray (char * 
 
     dataStream.close();
   }
-  else
-    throw systemException (__error__.filesError);
 }
 
 template <class Type> void checkAndSupport::readMatrix (matrixType<Type> & MTObject) {
 
-  if (isZero(MTObject.line) && isZero(MTObject.column)) throw systemException (__error__.readMatrixZeroError);
-  if (isNegative(MTObject.line) && isNegative(MTObject.column)) throw systemException (__error__.readMatrixNegativeError);
+  std::cin >> MTObject.lineRefference >> MTObject.columnRefference;
+
+  __handler__.standardHandlerMatrix (MTObject, __PRETTY_FUNCTION__);
 
   for (size_t iterator = MTObject.startLinePoint; iterator < MTObject.line + MTObject.endLinePoint; iterator++)
       for (size_t jiterator = MTObject.startColumnPoint; jiterator < MTObject.column + MTObject.endColumnPoint; jiterator++)
@@ -215,18 +293,15 @@ template <class Type> void checkAndSupport::readDynamicFileMatrix (char * fileNa
       }
     }
 
-    if (isZero(MTObject.lineRefference) || isZero(MTObject.columnRefference)) throw systemException (__error__.readDynamicFileMatrixZeroError);
-    if (isNegative(MTObject.lineRefference) || isNegative(MTObject.columnRefference)) throw systemException (__error__.readDynamicFileMatrixNegativeError);
+    __handler__.standardHandlerMatrix (MTObject, __PRETTY_FUNCTION__);
 
     dataStream.close();
   }
-  else throw systemException(__error__.filesError);
 }
 
 template <class Type> void checkAndSupport::putsMatrix (matrixType<Type> & MTObject) {
 
-  if (isZero(MTObject.line) && isZero(MTObject.column)) throw systemException (__error__.putsMatrixZeroError);
-  if (isNegative(MTObject.line) && isNegative(MTObject.column)) throw systemException (__error__.putsMatrixNegativeError);
+  __handler__.standardHandlerMatrix (MTObject);
 
   for (size_t iterator = MTObject.startLinePoint; iterator < MTObject.line + MTObject.endLinePoint; iterator++) {
       for (size_t jiterator = MTObject.startColumnPoint; jiterator < MTObject.column + MTObject.endColumnPoint; jiterator++)
@@ -237,8 +312,7 @@ template <class Type> void checkAndSupport::putsMatrix (matrixType<Type> & MTObj
 
 template <class Type> void checkAndSupport::putsFileMatrix (char * fileName, matrixType<Type> & MTObject) {
 
-  if (isZero(MTObject.line) && isZero(MTObject.column)) throw systemException (__error__.putsFileMatrixZeroError);
-  if (isNegative(MTObject.line) && isNegative(MTObject.column)) throw systemException (__error__.putsFileMatrixNegativeError);
+  __handler__.standardHandlerMatrix (MTObject, __PRETTY_FUNCTION__);
 
   std::ofstream dataStream(fileName, std::ios::out);
 
@@ -251,7 +325,6 @@ template <class Type> void checkAndSupport::putsFileMatrix (char * fileName, mat
     }
     dataStream.close();
   }
-  else throw systemException (__error__.filesError);
 }
 
 template <class Type> void checkAndSupport::readTree (binaryTreeType<Type> *& root) {
@@ -281,10 +354,30 @@ template <class Type> void checkAndSupport::putsTree (binaryTreeType<Type> * roo
   }
 }
 
+template <class Type> Type checkAndSupport::returnTheMaximumParameter (limits<Type> limitsObject) {
+
+  if (limitsObject.minimLimit >= limitsObject.maximLimit) return limitsObject.minimLimit;
+
+  return limitsObject.maximLimit;
+}
+
+template <class Type> Type checkAndSupport::returnTheMinimumParameter (limits<Type> limitsObject) {
+
+  if (limitsObject.minimLimit <= limitsObject.maximLimit) return limitsObject.minimLimit;
+
+  return limitsObject.maximLimit;
+}
+
+template <class Type> void checkAndSupport::interchangeValues (Type & parameterOne, Type & parameterTwo) {
+
+  parameterOne = parameterOne + parameterTwo;
+  parameterTwo = parameterOne - parameterTwo;
+  parameterOne = parameterOne - parameterTwo;
+}
+
 template <class Type> void portData::portOneDimensionalArrays (oneDimensionalArrayType<Type> ODAObjectOne, oneDimensionalArrayType<Type> ODAObjectTwo) {
 
-  if (isZero(ODAObjectTwo.length)) throw systemException (__error__.portOneDimensionalArraysZeroError);
-  if (isNegative(ODAObjectTwo.length)) throw systemException (__error__.portOneDimensionalArraysNegativeError);
+  __handler__.standardHandlerOneDimensionalArray (ODAObjectTwo, __PRETTY_FUNCTION__);
 
   ODAObjectOne.length = ODAObjectTwo.length;
   ODAObjectOne.startPoint = ODAObjectTwo.startPoint;
@@ -296,8 +389,7 @@ template <class Type> void portData::portOneDimensionalArrays (oneDimensionalArr
 
 template <class Type> void portData::portMatrices (matrixType<Type> & matrixObjectOne, matrixType<Type> matrixObjectTwo) {
 
-  if (isZero(matrixObjectTwo.line) && isZero(matrixObjectTwo.column)) throw systemException (__error__.putsMatrixZeroError);
-  if (isNegative(matrixObjectTwo.line) && isNegative(matrixObjectTwo.column)) throw systemException (__error__.putsMatrixNegativeError);
+  __handler__.standardHandlerMatrix (matrixObjectTwo, __PRETTY_FUNCTION__);
 
   matrixObjectOne.line = matrixObjectTwo.line;
   matrixObjectOne.column = matrixObjectTwo.column;
@@ -346,25 +438,7 @@ template <class Type> bool assertions::assertLimits (limits<Type> limitsObjectOn
 
 template <class Type> bool assertions::assertOneDimensionalArrays (oneDimensionalArrayType<Type> ODAObjectOne, oneDimensionalArrayType<Type> ODAObjectTwo) {
 
-  limits<Type> lengths;
-  lengths.minimLimit = ODAObjectOne.length;
-  lengths.maximLimit = ODAObjectTwo.length;
-
-  limits<Type> startPoints;
-  startPoints.minimLimit = ODAObjectOne.startPoint;
-  startPoints.maximLimit = ODAObjectTwo.startPoint;
-
-  limits<Type> endPoints;
-  endPoints.minimLimit = ODAObjectOne.endPoint;
-  endPoints.maximLimit = ODAObjectTwo.endPoint;
-
-  if (__rules__.isZero(ODAObjectOne.length)) throw systemException (__error__.assertOneDimensionalArraysZeroError);
-  if (__rules__.isNegative(ODAObjectOne.length)) throw systemException (__error__.assertOneDimensionalArraysZeroError);
-  if (__rules__.isZero(ODAObjectTwo.length)) throw systemException (__error__.assertOneDimensionalArraysZeroError);
-  if (__rules__.isNegative(ODAObjectTwo.length)) throw systemException (__error__.assertOneDimensionalArraysZeroError);
-  if (!__rules__.isEqual(lengths)) throw systemException (__error__.assertOneDimensionalArraysUnequalLengths);
-  if (!__rules__.isEqual(startPoints)) throw systemException (__error__.assertOneDimensionalArraysUnequalStartPoints);
-  if (!__rules__.isEqual(endPoints)) throw systemException (__error__.assertOneDimensionalArraysUnequalEndPoints);
+  __handler__.equalityHandlerOneDimensionalArrays (ODAObjectOne, ODAObjectTwo, __PRETTY_FUNCTION__);
 
   for (size_t iterator = ODAObjectOne.startPoint; iterator < ODAObjectOne.length + ODAObjectOne.endPoint; iterator++)
     if (ODAObjectOne.oneDimensionalArray[iterator] != ODAObjectTwo.oneDimensionalArray[iterator]) return false;
@@ -374,40 +448,7 @@ template <class Type> bool assertions::assertOneDimensionalArrays (oneDimensiona
 
 template <class Type> bool assertions::assertMatrix (matrixType<Type> & MTObjectOne, matrixType<Type> & MTObjectTwo) {
 
-  limits<Type> lines;
-  lines.minimLimit = MTObjectOne.line;
-  lines.maximLimit = MTObjectTwo.line;
-
-  limits<Type> columns;
-  columns.minimLimit = MTObjectOne.column;
-  columns.maximLimit = MTObjectTwo.column;
-
-  limits<Type> startLinePoints;
-  startLinePoints.minimLimit = MTObjectOne.startLinePoint;
-  startLinePoints.maximLimit = MTObjectTwo.startLinePoint;
-
-  limits<Type> endLinePoints;
-  endLinePoints.minimLimit = MTObjectOne.endLinePoint;
-  endLinePoints.maximLimit = MTObjectTwo.endLinePoint;
-
-  limits<Type> startColumnPoints;
-  startColumnPoints.minimLimit = MTObjectOne.startColumnPoint;
-  startColumnPoints.maximLimit = MTObjectTwo.startColumnPoint;
-
-  limits<Type> endColumnPoints;
-  endColumnPoints.minimLimit = MTObjectOne.endLinePoint;
-  endColumnPoints.maximLimit = MTObjectTwo.endLinePoint;
-
-  if (__rules__.isZero(MTObjectOne.line) && __rules__.isZero(MTObjectOne.column)) throw systemException (__error__.assertMatrixZeroError);
-  if (__rules__.isNegative(MTObjectOne.line) && __rules__.isNegative(MTObjectOne.column)) throw systemException (__error__.assertMatrixNegativeError);
-  if (__rules__.isZero(MTObjectTwo.line) && __rules__.isZero(MTObjectTwo.column)) throw systemException (__error__.readMatrixZeroError);
-  if (__rules__.isNegative(MTObjectTwo.line) && __rules__.isNegative(MTObjectTwo.column)) throw systemException (__error__.readMatrixNegativeError);
-  if (!__rules__.isEqual(lines)) throw systemException (__error__.assertMatrixUnequalLines);
-  if (!__rules__.isEqual(columns)) throw systemException (__error__.assertMatrixUnequalColumns);
-  if (!__rules__.isEqual(startLinePoints)) throw systemException (__error__.assertMatrixUnequalStartLinePoints);
-  if (!__rules__.isEqual(endLinePoints)) throw systemException (__error__.assertMatrixUnequalEndLinePoints);
-  if (!__rules__.isEqual(startColumnPoints)) throw systemException (__error__.assertMatrixUnequalStartColumnPoints);
-  if (!__rules__.isEqual(endColumnPoints)) throw systemException (__error__.assertMatrixUnequalEndColumnPoints);
+  __handler__.equalityHandlerMatrices (MTObjectOne, MTObjectTwo, __PRETTY_FUNCTION__);
 
   for (size_t iterator = MTObjectOne.startLinePoint; iterator < MTObjectOne.line + MTObjectOne.endLinePoint; iterator++)
     for (size_t jiterator = MTObjectOne.startColumnPoint; jiterator < MTObjectOne.column + MTObjectOne.endColumnPoint; jiterator++)
