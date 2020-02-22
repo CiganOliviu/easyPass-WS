@@ -165,6 +165,12 @@ template <class Type> void errorsHandler::equalityHandlerMatrices (matrixType<Ty
   if (__validations__.isNotEqualParameterBased(MTObjectOne.endColumnPoint, MTObjectTwo.endColumnPoint)) throw systemException (__errorMessages__.unequalEndColumnPointsError);
 }
 
+void errorsHandler::filesErrorValidation (std::ifstream & file, const char coreFunction[200]) {
+
+  if (!file.is_open())
+    __errorMessages__.filesError += coreFunction;
+}
+
 template <class Type> Type randomGenerator::numberGenerator (limits<Type> limitsObject) {
 
   srand(time(0));
@@ -221,17 +227,17 @@ template <class Type> void checkAndSupport::readDynamicFileDimensionalArray (cha
   std::ifstream dataStream(fileName, std::ios::in);
   Type data;
 
-  if (dataStream.is_open()) {
+  __handler__.filesErrorValidation (dataStream, __PRETTY_FUNCTION__);
 
-    while (dataStream >> data) {
+  while (dataStream >> data) {
 
-      ODAObject.oneDimensionalArray[ODAObject.length] = data;
-      ODAObject.length += 1;
-    }
-
-    __handler__.standardHandlerOneDimensionalArray (ODAObject, __PRETTY_FUNCTION__);
-    dataStream.close();
+    ODAObject.oneDimensionalArray[ODAObject.length] = data;
+    ODAObject.length += 1;
   }
+
+  __handler__.standardHandlerOneDimensionalArray (ODAObject, __PRETTY_FUNCTION__);
+
+  dataStream.close();
 }
 
 template <class Type> void checkAndSupport::putsOneDimensionalArray (oneDimensionalArrayType<Type> ODAObject) {
@@ -248,13 +254,12 @@ template <class Type> void checkAndSupport::putsFileOneDimensionalArray (char * 
 
   std::ofstream dataStream(fileName, std::ios::out);
 
-  if (dataStream.is_open()) {
+  __handler__.filesErrorValidation (dataStream, __PRETTY_FUNCTION__);
 
-    for (size_t iterator = ODAObject.startPoint; iterator < ODAObject.length + ODAObject.endPoint; iterator++)
-      dataStream << ODAObject.oneDimensionalArray[iterator] << " ";
+  for (size_t iterator = ODAObject.startPoint; iterator < ODAObject.length + ODAObject.endPoint; iterator++)
+    dataStream << ODAObject.oneDimensionalArray[iterator] << " ";
 
-    dataStream.close();
-  }
+  dataStream.close();
 }
 
 template <class Type> void checkAndSupport::readMatrix (matrixType<Type> & MTObject) {
@@ -276,32 +281,31 @@ template <class Type> void checkAndSupport::readDynamicFileMatrix (char * fileNa
   char endOfLine;
   int auxColumnLength = MTObject.columnRefference;
 
-  if (dataStream.is_open()) {
+  __handler__.filesErrorValidation (dataStream, __PRETTY_FUNCTION__);
 
-    while (dataStream >> data) {
+  while (dataStream >> data) {
 
-      MTObject.matrix[MTObject.lineRefference][auxColumnLength] = data;
+    MTObject.matrix[MTObject.lineRefference][auxColumnLength] = data;
 
-      auxColumnLength += 1;
+    auxColumnLength += 1;
 
-      dataStream.get (endOfLine);
+    dataStream.get (endOfLine);
 
-      if (endOfLine == '\n') {
-        MTObject.lineRefference += 1;
-        MTObject.columnRefference = auxColumnLength;
-        auxColumnLength = 0;
-      }
+    if (endOfLine == '\n') {
+      MTObject.lineRefference += 1;
+      MTObject.columnRefference = auxColumnLength;
+      auxColumnLength = 0;
     }
-
-    __handler__.standardHandlerMatrix (MTObject, __PRETTY_FUNCTION__);
-
-    dataStream.close();
   }
+
+  __handler__.standardHandlerMatrix (MTObject, __PRETTY_FUNCTION__);
+
+  dataStream.close();
 }
 
 template <class Type> void checkAndSupport::putsMatrix (matrixType<Type> & MTObject) {
 
-  __handler__.standardHandlerMatrix (MTObject);
+  __handler__.standardHandlerMatrix (MTObject, __PRETTY_FUNCTION__);
 
   for (size_t iterator = MTObject.startLinePoint; iterator < MTObject.line + MTObject.endLinePoint; iterator++) {
       for (size_t jiterator = MTObject.startColumnPoint; jiterator < MTObject.column + MTObject.endColumnPoint; jiterator++)
@@ -316,15 +320,15 @@ template <class Type> void checkAndSupport::putsFileMatrix (char * fileName, mat
 
   std::ofstream dataStream(fileName, std::ios::out);
 
-  if (dataStream.is_open()) {
+  __handler__.filesErrorValidation (dataStream, __PRETTY_FUNCTION__);
 
-    for (size_t iterator = MTObject.startLinePoint; iterator < MTObject.line + MTObject.endLinePoint; iterator++) {
-        for (size_t jiterator = MTObject.startColumnPoint; jiterator < MTObject.column + MTObject.endColumnPoint; jiterator++)
-          dataStream << MTObject.matrix[iterator][jiterator] << " ";
-        dataStream <<'\n';
-    }
-    dataStream.close();
+  for (size_t iterator = MTObject.startLinePoint; iterator < MTObject.line + MTObject.endLinePoint; iterator++) {
+      for (size_t jiterator = MTObject.startColumnPoint; jiterator < MTObject.column + MTObject.endColumnPoint; jiterator++)
+        dataStream << MTObject.matrix[iterator][jiterator] << " ";
+      dataStream <<'\n';
   }
+
+  dataStream.close();
 }
 
 template <class Type> void checkAndSupport::readTree (binaryTreeType<Type> *& root) {

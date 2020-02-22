@@ -3,7 +3,7 @@ class errorMessages {
 public:
   errorMessages () {}
 
-  std::string filesError = "Unable to open file";
+  std::string filesError = "Unable to open file ";
 
   std::string oneDimensionalArrayZeroLengthError = "Unable to process one dimensional array with length as zero in ";
   std::string oneDimensionalArrayNegativeLengthError = "Unable to process one dimensional array with negative length in ";
