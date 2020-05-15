@@ -112,12 +112,12 @@ namespace easyPassDefinitions {
     virtual ~randomGenerator () {}
   };
 
-  class checkAndSupport {
+  class lowLevelSupport {
   private:
     errorsHandler __handler__;
-
+    
   public:
-    checkAndSupport () {}
+    lowLevelSupport () {}
 
     template <class Type> void readOneDimensionalArray (oneDimensionalArrayType<Type> ODAObject);
     template <class Type> void readDynamicFileDimensionalArray (char * fileName, oneDimensionalArrayType<Type> ODAObject);
@@ -131,6 +131,17 @@ namespace easyPassDefinitions {
 
     template <class Type> void readTree (binaryTreeType<Type> *& root);
     template <class Type> void putsTree (binaryTreeType<Type> * root);
+
+    virtual ~lowLevelSupport () {}
+  };
+
+
+  class checkAndSupport {
+  private:
+    errorsHandler __handler__;
+
+  public:
+    checkAndSupport () {}
 
     template <class Type> Type returnTheMaximumParameter (limits<Type> limitsObject);
     template <class Type> Type returnTheMinimumParameter (limits<Type> limitsObject);
