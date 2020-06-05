@@ -24,6 +24,8 @@ SOFTWARE.
 
 #include "coreDependencies.hpp"
 #include "dataStructures/dataStructures.hpp"
+#include "dataStructures/calculationStructures.hpp"
+#include "dataStructures/geometryStructures.hpp"
 #include "errorMessages.hpp"
 
 using namespace dataStructures;
